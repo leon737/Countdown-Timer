@@ -1,0 +1,12 @@
+﻿<Window x:Class="CountdownTimer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="450" Width="725" Background="Black"
+        >
+
+    
+    <Grid>
+        <TextBlock Foreground="{Binding DesiredColor, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" HorizontalAlignment="Center" FontSize="248" FontFamily="Quartz" VerticalAlignment="Center" Text="{Binding TimeLeft, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+        
+    </Grid>
+</Window>
