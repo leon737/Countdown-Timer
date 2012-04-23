@@ -22,10 +22,10 @@
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Mins"/>
         <TextBlock Grid.Row="0" Grid.Column="1" Text="Secs"/>
-        <controls:UpDown Grid.Row="1" Grid.Column="0" NumValue="4" Step="1" MinValue="0" MaxValue="30" Margin="10 0"/>
-        <controls:UpDown Grid.Row="1" Grid.Column="1" NumValue="30" Step="15" MinValue="0" MaxValue="45" Margin="10 0"/>
+        <controls:UpDown Grid.Row="1" Grid.Column="0" Value="{Binding Minutes}" Step="1" MinValue="0" MaxValue="30" Margin="10 0"/>
+        <controls:UpDown Grid.Row="1" Grid.Column="1" Value="{Binding Seconds}" Step="15" MinValue="0" MaxValue="45" Margin="10 0"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Warmup"/>
-        <controls:UpDown Grid.Row="3" Grid.Column="0" NumValue="20" Step="5" MinValue="0" MaxValue="55" Margin="10 0"/>
+        <controls:UpDown Grid.Row="3" Grid.Column="0" Value="{Binding Warmup}" Step="5" MinValue="0" MaxValue="55" Margin="10 0"/>
         <Button Grid.Row="4" Grid.Column="0" Content="Start" Margin="10" />
     </Grid>
 </Window>

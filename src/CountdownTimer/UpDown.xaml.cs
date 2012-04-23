@@ -6,45 +6,83 @@ namespace CountdownTimer
 {
     public partial class UpDown
     {
+        static UpDown()
+        {
+            FrameworkPropertyMetadata valueMetadata = new FrameworkPropertyMetadata(1);
+            ValueProperty = DependencyProperty.Register("Value", typeof(int), typeof(Control), valueMetadata);
+            FrameworkPropertyMetadata stepMetadata = new FrameworkPropertyMetadata(1);
+            StepProperty = DependencyProperty.Register("Step", typeof(int), typeof(UpDown), stepMetadata);
+            FrameworkPropertyMetadata minValueMetadata = new FrameworkPropertyMetadata(0);
+            MinValueProperty = DependencyProperty.Register("MinValue", typeof(int), typeof(UpDown), minValueMetadata);
+            FrameworkPropertyMetadata maxValueMetadata = new FrameworkPropertyMetadata(10);
+            MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(int), typeof(UpDown), maxValueMetadata);
+        }
+
         public UpDown()
         {
             InitializeComponent();
-            txtNum.Text = numValue.ToString(CultureInfo.InvariantCulture);
         }
 
-        private int numValue;
-        public int NumValue
+
+        public static readonly DependencyProperty ValueProperty;
+        public static readonly DependencyProperty StepProperty;
+        public static readonly DependencyProperty MinValueProperty;
+        public static readonly DependencyProperty MaxValueProperty;
+
+        public int Value
         {
-            get { return numValue; }
+            get { return (int)GetValue(ValueProperty); }
             set
             {
-                numValue = value;
+                int numValue = value;
                 if (numValue < MinValue) numValue = MinValue;
                 if (numValue > MaxValue) numValue = MaxValue;
-                txtNum.Text = value.ToString(CultureInfo.InvariantCulture);
+                SetValue(ValueProperty, numValue);
             }
         }
 
-        public int Step { get; set; }
+        public int Step
+        {
+            get { return (int)GetValue(StepProperty); }
+            set
+            {
+                SetValue(StepProperty, value);
+            }
+        }
 
-        public int MinValue { get; set; }
+        public int MinValue
+        {
+            get { return (int)GetValue(MinValueProperty); }
+            set
+            {
+                SetValue(MinValueProperty, value);
+            }
+        }
 
-        public int MaxValue { get; set; }
+        public int MaxValue
+        {
+            get { return (int)GetValue(MaxValueProperty); }
+            set
+            {
+                SetValue(MaxValueProperty, value);
+            }
+        }
 
         private void CmdUpClick(object sender, RoutedEventArgs e)
         {
-            numValue += Step;
+            Value += Step;
         }
 
         private void CmdDownClick(object sender, RoutedEventArgs e)
         {
-            NumValue-=Step;
+            Value -= Step;
         }
 
         private void TxtNumTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!int.TryParse(txtNum.Text, out numValue))
-                txtNum.Text = numValue.ToString(CultureInfo.InvariantCulture);
+            int numValue;
+            if (int.TryParse(txtNum.Text, out numValue))
+                Value = numValue;
         }
 
     }

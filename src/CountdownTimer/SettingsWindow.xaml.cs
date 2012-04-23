@@ -18,8 +18,9 @@ namespace CountdownTimer
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        public SettingsWindow()
+        public SettingsWindow(SettingsModel settingsModel)
         {
+            this.DataContext = settingsModel;
             InitializeComponent();
         }
     }
