@@ -12,5 +12,12 @@ namespace CountdownTimer
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            var main = new MainWindow();
+            main.Show();
+            var settings = new SettingsWindow();
+            settings.Show();
+        }
     }
 }
