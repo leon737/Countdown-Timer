@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="CountdownTimer.UpDown"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="100">
+    <StackPanel Orientation="Horizontal">
+        <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="50" Text="0" TextChanged="TxtNumTextChanged" />
+        <StackPanel Margin="0 5">
+            <Button x:Name="cmdUp" x:FieldModifier="private" Content="˄" Width="20"  Height="15" Click="CmdUpClick" />
+            <Button x:Name="cmdDown" x:FieldModifier="private" Content="˅" Width="20"  Height="15" Click="CmdDownClick" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>
