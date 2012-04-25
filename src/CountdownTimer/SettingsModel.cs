@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace CountdownTimer
 {
     public class SettingsModel : INotifyPropertyChanged
     {
-
         public event PropertyChangedEventHandler PropertyChanged;
+        public delegate void StartTimer();
+        public StartTimer StartTimerCallback { get; set; }
 
         private int minutes;
         public int Minutes

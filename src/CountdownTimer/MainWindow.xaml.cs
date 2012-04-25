@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
@@ -23,39 +12,55 @@ namespace CountdownTimer
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-                
-        public MainWindow()
-        {
-            InitializeComponent();
-            sw = new Stopwatch();
-            sw.Start();
-            Task task = Task.Factory.StartNew(() =>
-            {
-                while (sw.ElapsedMilliseconds / 1000 <= secondsToGo)
-                {
-                    if (PropertyChanged != null)
-                    {
-                        if (!IsWarmup && !warmUpSignaled)
-                        {
-                            warmUpSignaled = true;
-                            PropertyChanged(this, new PropertyChangedEventArgs("DesiredColor"));                            
-                        }
-                        PropertyChanged(this, new PropertyChangedEventArgs("TimeLeft"));                                                
-                    }
-                    Thread.Sleep(1000);
-                }
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("DesiredColor"));
-                }
-            });
-        }
-
-
+        private readonly SettingsModel settingsModel;
         bool warmUpSignaled = false;
         int warmUpSeconds = 20;
         int secondsToGo = 5 * 60 + 20;
         Stopwatch sw;
+
+        public MainWindow(SettingsModel settingsModel)
+        {
+            this.settingsModel = settingsModel;
+            settingsModel.StartTimerCallback += StartTimer;
+            InitializeComponent();
+        }
+
+
+        public void StartTimer()
+        {
+            warmUpSignaled = false;
+            warmUpSeconds = settingsModel.Warmup;
+            secondsToGo = settingsModel.Minutes * 60  + settingsModel.Seconds + warmUpSeconds;
+            RunTimer();
+        }
+
+        private void RunTimer()
+        {
+            sw = new Stopwatch();
+            sw.Start();
+            PropertyChanged(this, new PropertyChangedEventArgs("DesiredColor"));
+            PropertyChanged(this, new PropertyChangedEventArgs("TimeLeft"));
+            Task.Factory.StartNew(() =>
+                                  {
+                                      while (sw.ElapsedMilliseconds / 1000 <= secondsToGo)
+                                      {
+                                          if (PropertyChanged != null)
+                                          {
+                                              if (!IsWarmup && !warmUpSignaled)
+                                              {
+                                                  warmUpSignaled = true;
+                                                  PropertyChanged(this, new PropertyChangedEventArgs("DesiredColor"));
+                                              }
+                                              PropertyChanged(this, new PropertyChangedEventArgs("TimeLeft"));
+                                          }
+                                          Thread.Sleep(1000);
+                                      }
+                                      if (PropertyChanged != null)
+                                      {
+                                          PropertyChanged(this, new PropertyChangedEventArgs("DesiredColor"));
+                                      }
+                                  });
+        }
 
         public Brush DesiredColor
         {
@@ -89,7 +94,7 @@ namespace CountdownTimer
             {
                 return (int)(sw.ElapsedMilliseconds / 1000) < warmUpSeconds;
             }
-        }     
+        }
 
 
         public string TimeLeft

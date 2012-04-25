@@ -17,7 +17,7 @@ namespace CountdownTimer
         protected override void OnStartup(StartupEventArgs e)
         {
             SetDefaultSettings();
-            var main = new MainWindow();
+            var main = new MainWindow(settingsModel);
             main.Show();
             var settings = new SettingsWindow(settingsModel);
             settings.Show();

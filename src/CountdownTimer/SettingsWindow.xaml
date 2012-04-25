@@ -26,6 +26,6 @@
         <controls:UpDown Grid.Row="1" Grid.Column="1" Value="{Binding Seconds}" Step="15" MinValue="0" MaxValue="45" Margin="10 0"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Warmup"/>
         <controls:UpDown Grid.Row="3" Grid.Column="0" Value="{Binding Warmup}" Step="5" MinValue="0" MaxValue="55" Margin="10 0"/>
-        <Button Grid.Row="4" Grid.Column="0" Content="Start" Margin="10" />
+        <Button Grid.Row="4" Grid.Column="0" Content="Start" Margin="10" Click="OnStartButtonClick" />
     </Grid>
 </Window>
