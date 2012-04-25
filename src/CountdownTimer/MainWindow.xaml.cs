@@ -22,7 +22,8 @@ namespace CountdownTimer
         {
             this.settingsModel = settingsModel;
             settingsModel.StartTimerCallback += StartTimer;
-            InitializeComponent();
+            sw = new Stopwatch();
+            InitializeComponent();            
         }
 
 
