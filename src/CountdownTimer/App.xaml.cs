@@ -12,7 +12,8 @@ namespace CountdownTimer
     /// </summary>
     public partial class App : Application
     {
-        SettingsModel settingsModel = new SettingsModel();        
+        SettingsModel settingsModel = new SettingsModel();
+        DisableScreensaver disableScreensaver = DisableScreensaver.Instance;
 
         protected override void OnStartup(StartupEventArgs e)
         {
