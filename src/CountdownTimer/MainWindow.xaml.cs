@@ -1,9 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Media;
 
 namespace CountdownTimer
 {
@@ -23,7 +25,7 @@ namespace CountdownTimer
             this.settingsModel = settingsModel;
             settingsModel.StartTimerCallback += StartTimer;
             sw = new Stopwatch();
-            InitializeComponent();            
+            InitializeComponent();
         }
 
 
@@ -31,7 +33,7 @@ namespace CountdownTimer
         {
             warmUpSignaled = false;
             warmUpSeconds = settingsModel.Warmup;
-            secondsToGo = settingsModel.Minutes * 60  + settingsModel.Seconds + warmUpSeconds;
+            secondsToGo = settingsModel.Minutes * 60 + settingsModel.Seconds + warmUpSeconds;
             RunTimer();
         }
 
@@ -50,6 +52,7 @@ namespace CountdownTimer
                                               if (!IsWarmup && !warmUpSignaled)
                                               {
                                                   warmUpSignaled = true;
+                                                  PlaySoundAsync(2);
                                                   PropertyChanged(this, new PropertyChangedEventArgs("DesiredColor"));
                                               }
                                               PropertyChanged(this, new PropertyChangedEventArgs("TimeLeft"));
@@ -58,9 +61,21 @@ namespace CountdownTimer
                                       }
                                       if (PropertyChanged != null)
                                       {
+                                          PlaySoundAsync(3);
                                           PropertyChanged(this, new PropertyChangedEventArgs("DesiredColor"));
                                       }
                                   });
+        }
+
+        private void PlaySoundAsync(int count)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                SoundPlayer player = new SoundPlayer("Resources/sound.wav");
+                player.Load();
+                for (int i = 0; i < count; ++i)
+                    player.PlaySync();
+            });
         }
 
         public Brush DesiredColor
