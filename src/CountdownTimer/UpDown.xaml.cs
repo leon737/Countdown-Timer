@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace CountdownTimer
@@ -9,13 +8,13 @@ namespace CountdownTimer
         static UpDown()
         {
             FrameworkPropertyMetadata valueMetadata = new FrameworkPropertyMetadata(1);
-            ValueProperty = DependencyProperty.Register("Value", typeof(int), typeof(Control), valueMetadata);
+            ValueProperty = DependencyProperty.Register(nameof(Value), typeof(int), typeof(Control), valueMetadata);
             FrameworkPropertyMetadata stepMetadata = new FrameworkPropertyMetadata(1);
-            StepProperty = DependencyProperty.Register("Step", typeof(int), typeof(UpDown), stepMetadata);
+            StepProperty = DependencyProperty.Register(nameof(Step), typeof(int), typeof(UpDown), stepMetadata);
             FrameworkPropertyMetadata minValueMetadata = new FrameworkPropertyMetadata(0);
-            MinValueProperty = DependencyProperty.Register("MinValue", typeof(int), typeof(UpDown), minValueMetadata);
+            MinValueProperty = DependencyProperty.Register(nameof(MinValue), typeof(int), typeof(UpDown), minValueMetadata);
             FrameworkPropertyMetadata maxValueMetadata = new FrameworkPropertyMetadata(10);
-            MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(int), typeof(UpDown), maxValueMetadata);
+            MaxValueProperty = DependencyProperty.Register(nameof(MaxValue), typeof(int), typeof(UpDown), maxValueMetadata);
         }
 
         public UpDown()

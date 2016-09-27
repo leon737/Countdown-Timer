@@ -4,20 +4,15 @@ namespace CountdownTimer
 {
     public partial class SettingsWindow : Window
     {
-        private readonly SettingsModel settingsModel;
+        private readonly SettingsModel _settingsModel;
 
         public SettingsWindow(SettingsModel settingsModel)
         {
-            this.settingsModel = settingsModel;
+            _settingsModel = settingsModel;
             DataContext = settingsModel;
             InitializeComponent();
         }
 
-        private void OnStartButtonClick(object sender, RoutedEventArgs e)
-        {
-            var startTimerCallback = settingsModel.StartTimerCallback;
-            if (startTimerCallback != null)
-                startTimerCallback();
-        }
+        private void OnStartButtonClick(object sender, RoutedEventArgs e) => _settingsModel.StartTimerCallback?.Invoke();
     }
 }

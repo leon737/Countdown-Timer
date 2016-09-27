@@ -8,53 +8,48 @@ namespace CountdownTimer
         public delegate void StartTimer();
         public StartTimer StartTimerCallback { get; set; }
 
-        private int minutes;
+        private int _minutes;
         public int Minutes
         {
-            get { return minutes; }
+            get { return _minutes; }
             set
             {
-                if (value != minutes)
+                if (value != _minutes)
                 {
-                    minutes = value;
-                    OnPropertyChanged("Minutes");
+                    _minutes = value;
+                    OnPropertyChanged(nameof(Minutes));
                 }
             }
         }
 
-        private int seconds;
+        private int _seconds;
         public int Seconds
         {
-            get { return seconds; }
+            get { return _seconds; }
             set
             {
-                if (value != seconds)
+                if (value != _seconds)
                 {
-                    seconds = value;
-                    OnPropertyChanged("Seconds");
+                    _seconds = value;
+                    OnPropertyChanged(nameof(Seconds));
                 }
             }
         }
 
-        private int warmup;
+        private int _warmup;
         public int Warmup
         {
-            get { return warmup; }
+            get { return _warmup; }
             set
             {
-                if (value != warmup)
+                if (value != _warmup)
                 {
-                    warmup = value;
-                    OnPropertyChanged("Warmup");
+                    _warmup = value;
+                    OnPropertyChanged(nameof(Warmup));
                 }
             }
         }
 
-        protected void OnPropertyChanged(string propName)
-        {
-            var v = PropertyChanged;
-            if (v != null)
-                v(this, new PropertyChangedEventArgs(propName));
-        }
+        protected void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }
 }

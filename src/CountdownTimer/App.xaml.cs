@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 
 namespace CountdownTimer
 {
@@ -12,23 +7,23 @@ namespace CountdownTimer
     /// </summary>
     public partial class App : Application
     {
-        SettingsModel settingsModel = new SettingsModel();
-        DisableScreensaver disableScreensaver = DisableScreensaver.Instance;
+        readonly SettingsModel _settingsModel = new SettingsModel();
+        DisableScreensaver _disableScreensaver = DisableScreensaver.Instance;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             SetDefaultSettings();
-            var main = new MainWindow(settingsModel);
+            var main = new MainWindow(_settingsModel);
             main.Show();
-            var settings = new SettingsWindow(settingsModel);
+            var settings = new SettingsWindow(_settingsModel);
             settings.Show();
         }
 
         private void SetDefaultSettings()
         {
-            settingsModel.Minutes = 4;
-            settingsModel.Seconds = 0;
-            settingsModel.Warmup = 20;
+            _settingsModel.Minutes = 4;
+            _settingsModel.Seconds = 0;
+            _settingsModel.Warmup = 20;
         }
     }
 }
