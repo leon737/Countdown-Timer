@@ -1,10 +1,13 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Threading.Tasks;
 using System.Threading;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Media;
+using CountdownTimer.Models;
+using Functional.Fluent.Pattern;
 
 namespace CountdownTimer
 {
@@ -19,6 +22,12 @@ namespace CountdownTimer
         int _warmUpSeconds = 20;
         int _secondsToGo = 5 * 60 + 20;
         private Stopwatch _sw;
+        private Guid _runningStopwatch = Guid.Empty;
+
+        Lazy<Matcher<State, Color>> _desiredColorMatcher = new Lazy<Matcher<State, Color>>(() => new Matcher<State, Color>()
+            .With(State.Running, Colors.Green)
+            .With(State.Warmup, Colors.Yellow)
+            .Else(Colors.Red));
 
         public MainWindow(SettingsModel settingsModel)
         {
@@ -40,31 +49,36 @@ namespace CountdownTimer
         private void RunTimer()
         {
             _sw = new Stopwatch();
+            _runningStopwatch = Guid.NewGuid();
             _sw.Start();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DesiredColor)));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TimeLeft)));
             Task.Factory.StartNew(() =>
-                                  {
-                                      while (_sw.ElapsedMilliseconds / 1000 <= _secondsToGo)
-                                      {
-                                          if (PropertyChanged != null)
-                                          {
-                                              if (!IsWarmup && !_warmUpSignaled)
-                                              {
-                                                  _warmUpSignaled = true;
-                                                  PlaySoundAsync(2);
-                                                  PropertyChanged(this, new PropertyChangedEventArgs(nameof(DesiredColor)));
-                                              }
-                                              PropertyChanged(this, new PropertyChangedEventArgs(nameof(TimeLeft)));
-                                          }
-                                          Thread.Sleep(1000);
-                                      }
-                                      if (PropertyChanged != null)
-                                      {
-                                          PlaySoundAsync(3);
-                                          PropertyChanged(this, new PropertyChangedEventArgs(nameof(DesiredColor)));
-                                      }
-                                  });
+            {
+                var uid = _runningStopwatch;
+                while (_sw.ElapsedMilliseconds / 1000 <= _secondsToGo)
+                {
+                    if (_runningStopwatch != uid)
+                        return;
+
+                    if (PropertyChanged != null)
+                    {
+                        if (!IsWarmup && !_warmUpSignaled)
+                        {
+                            _warmUpSignaled = true;
+                            PlaySoundAsync(2);
+                            PropertyChanged(this, new PropertyChangedEventArgs(nameof(DesiredColor)));
+                        }
+                        PropertyChanged(this, new PropertyChangedEventArgs(nameof(TimeLeft)));
+                    }
+                    Thread.Sleep(1000);
+                }
+                if (PropertyChanged != null)
+                {
+                    PlaySoundAsync(3);
+                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(DesiredColor)));
+                }
+            });
         }
 
         private void PlaySoundAsync(int count)
@@ -79,12 +93,14 @@ namespace CountdownTimer
         }
 
         public Brush DesiredColor => new SolidColorBrush(GetDesiredColor());
-
-        Color GetDesiredColor() => !IsRunning ? Colors.Red : (IsWarmup ? Colors.Yellow : Colors.Green);
+        
+        Color GetDesiredColor() => _desiredColorMatcher.Value.Match(CurrentState);
 
         public bool IsRunning => _secondsToGo - (int)(_sw.ElapsedMilliseconds / 1000) > 0;
 
         public bool IsWarmup => (int)(_sw.ElapsedMilliseconds / 1000) < _warmUpSeconds;
+
+        public State CurrentState => IsWarmup ? State.Warmup : IsRunning ? State.Running : State.Off;
 
 
         public string TimeLeft
@@ -94,6 +110,8 @@ namespace CountdownTimer
                 int secondsLeft = _secondsToGo - (int)(_sw.ElapsedMilliseconds / 1000);
                 int minutes = secondsLeft / 60;
                 int seconds = secondsLeft % 60;
+                if (minutes < 0) minutes = 0;
+                if (seconds < 0) seconds = 0;
                 return $"{minutes:00}:{seconds:00}";
             }
         }
