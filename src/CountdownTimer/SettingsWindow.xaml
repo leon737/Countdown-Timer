@@ -15,6 +15,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="150"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
@@ -22,26 +23,35 @@
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="235"/>
+                <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mins"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="Secs"/>
-            <controls:UpDown Grid.Row="1" Grid.Column="0" Value="{Binding Minutes, Mode=TwoWay}" Step="1" MinValue="0" MaxValue="30" Margin="10 0"/>
-            <controls:UpDown Grid.Row="1" Grid.Column="1" Value="{Binding Seconds, Mode=TwoWay}" Step="15" MinValue="0" MaxValue="45" Margin="10 0"/>
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Warmup (secs)"/>
-            <controls:UpDown Grid.Row="3" Grid.Column="0" Value="{Binding Warmup, Mode=TwoWay}" Step="5" MinValue="0" MaxValue="55" Margin="10 0"/>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Time"/>
+            <controls:TimeInputBox Grid.Row="0" Grid.Column="1" Value="{Binding Time, Mode=TwoWay}" Step="00:01:15" MinValue="00:00:00" MaxValue="00:50:00" Margin="10 0"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Warmup"/>
+            <controls:TimeInputBox Grid.Row="1" Grid.Column="1" Value="{Binding Warmup, Mode=TwoWay}" Step="00:01:05" MinValue="00:00:00" MaxValue="00:05:00" Margin="10 0"/>
         </Grid>
-        <StackPanel Grid.Row="1">
-            <controls:TimeInputBox Value="{Binding Test, Mode=TwoWay}" />
-            <TextBlock Text="{Binding Test, Mode=OneWay}" />
-        </StackPanel>
-        <Button Grid.Row="2" Grid.Column="0" Content="Start" Margin="10" Click="OnStartButtonClick" />
+        <Button Grid.Row="1" Grid.Column="0" Content="Add" Margin="10" Command="{Binding AddCheckpointCommand}" />
+        <Grid Grid.Row="2" Grid.Column="0" x:Name="CheckpointsGrid">
+            <ItemsControl ItemsSource="{Binding Checkpoints}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0" Height="44">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <controls:TimeInputBox Grid.Column="0" Value="{Binding Time, Mode=TwoWay}" Step="00:01:15" MinValue="00:00:00" MaxValue="00:50:00" Margin="10 0" />
+                            <Button Grid.Column="1" Content="Remove" Command="{Binding ElementName=CheckpointsGrid, Path=DataContext.RemoveCheckpointCommand}" 
+                                    CommandParameter="{Binding}" Height="22" Width="100" Margin="0 18 0 0"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        <Button Grid.Row="3" Grid.Column="0" Content="Start" Margin="10" Command="{Binding StartTimerCommand}" />
     </Grid>
 </Window>
 

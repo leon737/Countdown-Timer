@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Windows;
+using CountdownTimer.Models;
 
 namespace CountdownTimer
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         readonly SettingsModel _settingsModel = new SettingsModel();
@@ -22,10 +20,8 @@ namespace CountdownTimer
 
         private void SetDefaultSettings()
         {
-            _settingsModel.Minutes = 4;
-            _settingsModel.Seconds = 0;
-            _settingsModel.Warmup = 20;
-            _settingsModel.Test = new TimeSpan(0, 3, 2);
+            _settingsModel.Time = TimeSpan.FromMinutes(4);
+            _settingsModel.Warmup = TimeSpan.FromSeconds(20);
         }
     }
 }

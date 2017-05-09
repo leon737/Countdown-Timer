@@ -11,9 +11,6 @@ using Functional.Fluent.Pattern;
 
 namespace CountdownTimer
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private const string SoundFilePath = "Resources/sound.wav";
@@ -41,8 +38,8 @@ namespace CountdownTimer
         public void StartTimer()
         {
             _warmUpSignaled = false;
-            _warmUpSeconds = _settingsModel.Warmup;
-            _secondsToGo = _settingsModel.Minutes * 60 + _settingsModel.Seconds + _warmUpSeconds;
+            _warmUpSeconds = (int)_settingsModel.Warmup.TotalSeconds;
+            _secondsToGo = (int)_settingsModel.Time.TotalSeconds + _warmUpSeconds;
             RunTimer();
         }
 

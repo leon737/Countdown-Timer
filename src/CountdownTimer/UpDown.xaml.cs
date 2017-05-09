@@ -13,7 +13,7 @@ namespace CountdownTimer
             StepProperty = DependencyProperty.Register(nameof(Step), typeof(int), typeof(UpDown), stepMetadata);
             FrameworkPropertyMetadata minValueMetadata = new FrameworkPropertyMetadata(0);
             MinValueProperty = DependencyProperty.Register(nameof(MinValue), typeof(int), typeof(UpDown), minValueMetadata);
-            FrameworkPropertyMetadata maxValueMetadata = new FrameworkPropertyMetadata(10);
+            FrameworkPropertyMetadata maxValueMetadata = new FrameworkPropertyMetadata(1000);
             MaxValueProperty = DependencyProperty.Register(nameof(MaxValue), typeof(int), typeof(UpDown), maxValueMetadata);
         }
 

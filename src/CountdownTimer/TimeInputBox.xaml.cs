@@ -37,8 +37,6 @@ namespace CountdownTimer
             set
             {
                 TimeSpan numValue = value;
-                if (numValue < MinValue) numValue = MinValue;
-                if (numValue > MaxValue) numValue = MaxValue;
                 SetValue(ValueProperty, numValue);
                 OnPropertyChanged(nameof(ValueMins));
                 OnPropertyChanged(nameof(ValueSecs));
