@@ -2,30 +2,46 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:CountdownTimer"
-        Title="SettingsWindow" Height="271" Width="500">
+        Title="SettingsWindow" Height="471" Width="500">
     <Window.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="Margin" Value="10"/>
-        </Style>        
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="235"/>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Mins"/>
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="Secs"/>
-        <controls:UpDown Grid.Row="1" Grid.Column="0" Value="{Binding Minutes, Mode=TwoWay}" Step="1" MinValue="0" MaxValue="30" Margin="10 0"/>
-        <controls:UpDown Grid.Row="1" Grid.Column="1" Value="{Binding Seconds, Mode=TwoWay}" Step="15" MinValue="0" MaxValue="45" Margin="10 0"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Warmup"/>
-        <controls:UpDown Grid.Row="3" Grid.Column="0" Value="{Binding Warmup, Mode=TwoWay}" Step="5" MinValue="0" MaxValue="55" Margin="10 0"/>
-        <Button Grid.Row="4" Grid.Column="0" Content="Start" Margin="10" Click="OnStartButtonClick" />
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="235"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mins"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Secs"/>
+            <controls:UpDown Grid.Row="1" Grid.Column="0" Value="{Binding Minutes, Mode=TwoWay}" Step="1" MinValue="0" MaxValue="30" Margin="10 0"/>
+            <controls:UpDown Grid.Row="1" Grid.Column="1" Value="{Binding Seconds, Mode=TwoWay}" Step="15" MinValue="0" MaxValue="45" Margin="10 0"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Warmup (secs)"/>
+            <controls:UpDown Grid.Row="3" Grid.Column="0" Value="{Binding Warmup, Mode=TwoWay}" Step="5" MinValue="0" MaxValue="55" Margin="10 0"/>
+        </Grid>
+        <StackPanel Grid.Row="1">
+            <controls:TimeInputBox Value="{Binding Test, Mode=TwoWay}" />
+            <TextBlock Text="{Binding Test, Mode=OneWay}" />
+        </StackPanel>
+        <Button Grid.Row="2" Grid.Column="0" Content="Start" Margin="10" Click="OnStartButtonClick" />
     </Grid>
 </Window>
+

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace CountdownTimer
 {
@@ -49,6 +50,22 @@ namespace CountdownTimer
                 }
             }
         }
+
+        private TimeSpan _test;
+        public TimeSpan Test
+        {
+            get { return _test; }
+            set
+            {
+                if (value != _test)
+                {
+                    _test = value;
+                    OnPropertyChanged(nameof(Test));
+                }
+            }
+        }
+
+
 
         protected void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
     }

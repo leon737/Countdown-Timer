@@ -5,11 +5,26 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="100">
-    <StackPanel Orientation="Horizontal">
-        <TextBox x:Name="txtNum" x:FieldModifier="private" Margin="5,5,0,5" Width="50" Text="{Binding Value, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" TextChanged="TxtNumTextChanged"/>
-        <StackPanel Margin="0 5">
-            <Button x:Name="cmdUp" x:FieldModifier="private" Content="˄" Width="20"  Height="15" Click="CmdUpClick" />
-            <Button x:Name="cmdDown" x:FieldModifier="private" Content="˅" Width="20"  Height="15" Click="CmdDownClick" />
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="5"/>
+            <Setter Property="Height" Value="11"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="22"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="0" Height="22">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Grid.Column="0" x:Name="txtNum" x:FieldModifier="private" Width="50" Text="{Binding Value, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" TextChanged="TxtNumTextChanged"/>
+        <StackPanel Grid.Column="1">
+            <Button x:Name="cmdUp" x:FieldModifier="private" Content="˄" Width="20"  Click="CmdUpClick" />
+            <Button x:Name="cmdDown" x:FieldModifier="private" Content="˅" Width="20"  Click="CmdDownClick" />
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </UserControl>

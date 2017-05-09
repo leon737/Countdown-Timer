@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="CountdownTimer.TimeInputBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CountdownTimer"
+             xmlns:controls="clr-namespace:CountdownTimer"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="160">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="18"/>
+            <RowDefinition Height="22"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Mins"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Secs"/>
+        <controls:UpDown Grid.Row="1" Grid.Column="0" 
+                         Value="{Binding ValueMins, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                         Step="{Binding StepMins, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                         MinValue="{Binding MinValueMins, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                         MaxValue="{Binding MaxValueMins, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                         />
+        <controls:UpDown Grid.Row="1" Grid.Column="1" 
+                         Value="{Binding ValueSecs, Mode=TwoWay, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                         Step="{Binding StepSecs, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                         MinValue="{Binding MinValueSecs, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                         MaxValue="{Binding MaxValueSecs, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"
+                         />
+    </Grid>
+</UserControl>

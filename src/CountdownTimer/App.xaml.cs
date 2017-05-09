@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace CountdownTimer
 {
@@ -24,6 +25,7 @@ namespace CountdownTimer
             _settingsModel.Minutes = 4;
             _settingsModel.Seconds = 0;
             _settingsModel.Warmup = 20;
+            _settingsModel.Test = new TimeSpan(0, 3, 2);
         }
     }
 }

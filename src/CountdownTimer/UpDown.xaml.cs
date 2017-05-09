@@ -8,7 +8,7 @@ namespace CountdownTimer
         static UpDown()
         {
             FrameworkPropertyMetadata valueMetadata = new FrameworkPropertyMetadata(1);
-            ValueProperty = DependencyProperty.Register(nameof(Value), typeof(int), typeof(Control), valueMetadata);
+            ValueProperty = DependencyProperty.Register(nameof(Value), typeof(int), typeof(UpDown), valueMetadata);
             FrameworkPropertyMetadata stepMetadata = new FrameworkPropertyMetadata(1);
             StepProperty = DependencyProperty.Register(nameof(Step), typeof(int), typeof(UpDown), stepMetadata);
             FrameworkPropertyMetadata minValueMetadata = new FrameworkPropertyMetadata(0);
