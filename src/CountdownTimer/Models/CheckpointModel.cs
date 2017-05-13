@@ -29,5 +29,7 @@ namespace CountdownTimer.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public bool Fired { get; set; }
     }
 }

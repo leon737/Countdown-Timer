@@ -7,7 +7,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Media;
 using CountdownTimer.Models;
+using Functional.Fluent.Extensions;
 using Functional.Fluent.Pattern;
+using System.Linq;
 
 namespace CountdownTimer
 {
@@ -40,6 +42,11 @@ namespace CountdownTimer
             _warmUpSignaled = false;
             _warmUpSeconds = (int)_settingsModel.Warmup.TotalSeconds;
             _secondsToGo = (int)_settingsModel.Time.TotalSeconds + _warmUpSeconds;
+            foreach (var checkpoint in _settingsModel.Checkpoints)
+            {
+                checkpoint.Fired = false;
+            }
+
             RunTimer();
         }
 
@@ -66,6 +73,17 @@ namespace CountdownTimer
                             PlaySoundAsync(2);
                             PropertyChanged(this, new PropertyChangedEventArgs(nameof(DesiredColor)));
                         }
+
+                        var remaining = Remaining;
+                        foreach (var checkpoint in _settingsModel.Checkpoints.Where(x => !x.Fired))
+                        {
+                            if (remaining < (int) checkpoint.Time.TotalSeconds)
+                            {
+                                checkpoint.Fired = true;
+                                PlaySoundAsync(1);
+                            }
+                        }
+
                         PropertyChanged(this, new PropertyChangedEventArgs(nameof(TimeLeft)));
                     }
                     Thread.Sleep(1000);
@@ -93,7 +111,9 @@ namespace CountdownTimer
         
         Color GetDesiredColor() => _desiredColorMatcher.Value.Match(CurrentState);
 
-        public bool IsRunning => _secondsToGo - (int)(_sw.ElapsedMilliseconds / 1000) > 0;
+        protected int Remaining => _secondsToGo - (int) (_sw.ElapsedMilliseconds/1000);
+
+        public bool IsRunning => Remaining > 0;
 
         public bool IsWarmup => (int)(_sw.ElapsedMilliseconds / 1000) < _warmUpSeconds;
 
