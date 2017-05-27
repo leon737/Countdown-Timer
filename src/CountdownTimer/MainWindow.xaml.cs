@@ -34,10 +34,10 @@ namespace CountdownTimer
             settingsModel.StartTimerCallback += StartTimer;
             _sw = new Stopwatch();
             InitializeComponent();
+            Closed += OnClose;
         }
 
-
-        public void StartTimer()
+       public void StartTimer()
         {
             _warmUpSignaled = false;
             _warmUpSeconds = (int)_settingsModel.Warmup.TotalSeconds;
@@ -94,6 +94,11 @@ namespace CountdownTimer
                     PropertyChanged(this, new PropertyChangedEventArgs(nameof(DesiredColor)));
                 }
             });
+        }
+
+        private void OnClose(object sender, EventArgs e)
+        {
+            WindowManager.Instance.Release(this);
         }
 
         private void PlaySoundAsync(int count)

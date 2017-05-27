@@ -8,7 +8,7 @@ namespace CountdownTimer
     {
         readonly SettingsModel _settingsModel = new SettingsModel();
         DisableScreensaver _disableScreensaver = DisableScreensaver.Instance;
-
+        
         protected override void OnStartup(StartupEventArgs e)
         {
             SetDefaultSettings();
@@ -16,6 +16,9 @@ namespace CountdownTimer
             main.Show();
             var settings = new SettingsWindow(_settingsModel);
             settings.Show();
+
+            WindowManager.Instance.RegisterWindow(main);
+            WindowManager.Instance.RegisterWindow(settings);
         }
 
         private void SetDefaultSettings()

@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace CountdownTimer.Models
 {
     public class SettingsModel : INotifyPropertyChanged
     {
+
+        private const int MaxCheckpointsCount = 4;
+
         public event PropertyChangedEventHandler PropertyChanged;
         public delegate void StartTimer();
         public StartTimer StartTimerCallback { get; set; }
@@ -56,17 +60,21 @@ namespace CountdownTimer.Models
         {
             Checkpoints.Add(new CheckpointModel());
             OnPropertyChanged(nameof(Checkpoints));
+            OnPropertyChanged(nameof(CanAddCheckpoints));
         }
 
         private void RemoveCheckpoint(object obj)
         {
             Checkpoints.Remove((CheckpointModel)obj);
             OnPropertyChanged(nameof(Checkpoints));
+            OnPropertyChanged(nameof(CanAddCheckpoints));
         }
 
         private void StartTimerCommandCb(object obj) => StartTimerCallback?.Invoke();
 
 
         protected void OnPropertyChanged(string propName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+
+        public bool CanAddCheckpoints => Checkpoints.Count() < MaxCheckpointsCount;
     }
 }

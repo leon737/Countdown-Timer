@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:CountdownTimer"
-        Title="SettingsWindow" Height="471" Width="500">
+        Title="SettingsWindow" Height="471" Width="500" ResizeMode="NoResize">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Margin" Value="5"/>
@@ -16,7 +16,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="185"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -33,7 +33,7 @@
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Warmup"/>
             <controls:TimeInputBox Grid.Row="1" Grid.Column="1" Value="{Binding Warmup, Mode=TwoWay}" Step="00:01:05" MinValue="00:00:00" MaxValue="00:05:00" Margin="10 0"/>
         </Grid>
-        <Button Grid.Row="1" Grid.Column="0" Content="Add" Margin="10" Command="{Binding AddCheckpointCommand}" />
+        <Button Grid.Row="1" Grid.Column="0" Content="Add" Margin="10" Command="{Binding AddCheckpointCommand}" IsEnabled="{Binding CanAddCheckpoints}" />
         <Grid Grid.Row="2" Grid.Column="0" x:Name="CheckpointsGrid">
             <ItemsControl ItemsSource="{Binding Checkpoints}">
                 <ItemsControl.ItemTemplate>

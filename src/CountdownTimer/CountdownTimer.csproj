@@ -76,6 +76,7 @@
     <Compile Include="UpDown.xaml.cs">
       <DependentUpon>UpDown.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WindowManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

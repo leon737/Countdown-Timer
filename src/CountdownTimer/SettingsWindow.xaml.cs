@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using CountdownTimer.Models;
 
 namespace CountdownTimer
@@ -10,6 +11,12 @@ namespace CountdownTimer
         {
             DataContext = settingsModel;
             InitializeComponent();
+            Closed += OnClose;
+        }
+
+        private void OnClose(object sender, EventArgs e)
+        {
+            WindowManager.Instance.Release(this);
         }
     }
 }
