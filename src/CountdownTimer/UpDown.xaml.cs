@@ -11,6 +11,8 @@ namespace CountdownTimer
             ValueProperty = DependencyProperty.Register(nameof(Value), typeof(int), typeof(UpDown), valueMetadata);
             FrameworkPropertyMetadata stepMetadata = new FrameworkPropertyMetadata(1);
             StepProperty = DependencyProperty.Register(nameof(Step), typeof(int), typeof(UpDown), stepMetadata);
+            FrameworkPropertyMetadata largeStepMetadata = new FrameworkPropertyMetadata(10);
+            LargeStepProperty = DependencyProperty.Register(nameof(LargeStep), typeof(int), typeof(UpDown), largeStepMetadata);
             FrameworkPropertyMetadata minValueMetadata = new FrameworkPropertyMetadata(0);
             MinValueProperty = DependencyProperty.Register(nameof(MinValue), typeof(int), typeof(UpDown), minValueMetadata);
             FrameworkPropertyMetadata maxValueMetadata = new FrameworkPropertyMetadata(1000);
@@ -25,6 +27,7 @@ namespace CountdownTimer
 
         public static readonly DependencyProperty ValueProperty;
         public static readonly DependencyProperty StepProperty;
+        public static readonly DependencyProperty LargeStepProperty;
         public static readonly DependencyProperty MinValueProperty;
         public static readonly DependencyProperty MaxValueProperty;
 
@@ -46,6 +49,15 @@ namespace CountdownTimer
             set
             {
                 SetValue(StepProperty, value);
+            }
+        }
+
+        public int LargeStep
+        {
+            get { return (int)GetValue(LargeStepProperty); }
+            set
+            {
+                SetValue(LargeStepProperty, value);
             }
         }
 
@@ -75,6 +87,16 @@ namespace CountdownTimer
         private void CmdDownClick(object sender, RoutedEventArgs e)
         {
             Value -= Step;
+        }
+
+        private void CmdRUpClick(object sender, RoutedEventArgs e)
+        {
+            Value += LargeStep;
+        }
+
+        private void CmdRDownClick(object sender, RoutedEventArgs e)
+        {
+            Value -= LargeStep;
         }
 
         private void TxtNumTextChanged(object sender, TextChangedEventArgs e)

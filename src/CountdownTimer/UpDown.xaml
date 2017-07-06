@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:r="clr-namespace:CountdownTimer"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="100">
     <UserControl.Resources>
-        <Style TargetType="Button">
+        <Style TargetType="r:RightClickButton">
             <Setter Property="FontSize" Value="5"/>
             <Setter Property="Height" Value="11"/>
         </Style>
@@ -23,8 +24,8 @@
         </Grid.ColumnDefinitions>
         <TextBox Grid.Column="0" x:Name="txtNum" x:FieldModifier="private" Width="50" Text="{Binding Value, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" TextChanged="TxtNumTextChanged"/>
         <StackPanel Grid.Column="1">
-            <Button x:Name="cmdUp" x:FieldModifier="private" Content="˄" Width="20"  Click="CmdUpClick" />
-            <Button x:Name="cmdDown" x:FieldModifier="private" Content="˅" Width="20"  Click="CmdDownClick" />
+            <r:RightClickButton x:Name="cmdUp" x:FieldModifier="private" Content="˄" Width="20"  Click="CmdUpClick" RightClick="CmdRUpClick"  />
+            <r:RightClickButton x:Name="cmdDown" x:FieldModifier="private" Content="˅" Width="20"  Click="CmdDownClick" RightClick="CmdRDownClick" />
         </StackPanel>
     </Grid>
 </UserControl>
