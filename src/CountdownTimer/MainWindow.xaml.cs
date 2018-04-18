@@ -86,7 +86,7 @@ namespace CountdownTimer
 
                         PropertyChanged(this, new PropertyChangedEventArgs(nameof(TimeLeft)));
                     }
-                    Thread.Sleep(1000);
+                    Thread.Sleep(500);
                 }
                 if (PropertyChanged != null)
                 {
